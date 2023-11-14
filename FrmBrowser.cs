@@ -488,13 +488,18 @@ namespace AutoBrowser
         }
         private void cmnuTargetItemTestFind_Click(object sender, EventArgs e)
         {
+            _setScriptStatus("Finding...");
             if (lvTargets.SelectedItems.Count > 0)
             {
-                var points = ScriptUtils.FindTarget(lvTargets.SelectedItems[0].Text);
-                _setScriptStatus("Point: " + points.Length);
+                string _itemName = lvTargets.SelectedItems[0].Text;
 
                 System.Threading.ThreadPool.QueueUserWorkItem(delegate
                 {
+                    DateTime _st = DateTime.Now;
+                    var points = ScriptUtils.FindTarget(_itemName);
+                    var _ms = DateTime.Now.Subtract(_st).TotalMilliseconds.ToString("0.##");
+                    _setScriptStatus("Point: " + points.Length + " ("+ _ms +"ms)");
+
                     foreach (var pt in points)
                     {
                         System.Threading.Thread.Sleep(1000);
