@@ -50,3 +50,5 @@ void KeyUp(string key); //| 模拟按抬起键盘某键, KeyUp("A"); KeyUp("Alt"
   *获取和设置 PointMode [global/local]* 
 * LikeColor/LikeColorValue
    *颜色模糊比较*
+---
+![主界面]("./P1.png")
