@@ -20,7 +20,7 @@ System.Drawing.Color GetPosColor(int x, int y); //| 全局坐标
 ```
 * FindTarget
 ```
-System.Drawing.Point[] FindTarget(string name);
+System.Drawing.Point[] FindTarget(string name); //| 使用 OpenCvSharp3 
 ```
 * Sleep
 ```
