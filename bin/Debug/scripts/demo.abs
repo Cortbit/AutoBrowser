@@ -1,0 +1,60 @@
+﻿//Console.WriteLine("hello, world!");
+//System.Windows.Forms.MessageBox.Show("Hello, world!");
+//AutoBrowser.Utils.MsgBox("Full Invoke");
+
+MsgBox("Hello, world"); //| 简单对话框，脚本暂停，并等待处理
+MsgBox("自动关闭对话框，3 秒后自动关闭！", "标题", 64, 3000); //| 定时关闭
+
+//var istr = InputBox("请输入文本内容");
+var str2 = InputBox("请输入文本内容", "[defaultValue]", "限时 3 秒，超时自动关闭，并返回默认值", 3000);
+//MsgBox(str2, "Input Result", 2000);
+
+//| 测试 for 循环///////////////////
+for (int i=0; i<2; i++)
+{
+	MsgBox("Hi -> "+ i, "测试 FOR 循环");
+}
+
+var _ptMode = GetPointMode(); //| 获取当前位置模式，全局(global)/局部(local)
+SetPointMode("global");  //| 设置全局位置模式
+MsgBox("原坐标模式: "+ _ptMode +"\r\n当前坐标模式: "+ GetPointMode() +"\r\nps: 适用于坐标取色、鼠标位置", "FUN: GetPointMode");
+
+//| 取色测试 ///////////////////////
+var color = GetColor(0,0);  //| 取位置(0,0)的颜色，point: x,y，坐标位置与PointMode有关
+SetPointMode(_ptMode);  //| 恢复默认位置模式
+
+//| 测试 if 判断 ///////////////////
+if (color.R > 128)
+{
+  MsgBox("红色值(R) > 128\r\n"+ color, "测试 IF 判断");
+}
+else if (color.R >= 64)
+{
+  MsgBox("红色值(R) >= 64\r\n"+ color, "测试 IF 判断");
+}
+else
+{
+  MsgBox("红色值(R) < 64\r\n"+ color, "测试 IF 判断");
+}
+
+//| 定义函数([in,in,...],out) //////
+Func<int, int, int> myAdd = (par_a, par_b) => { return par_a + par_b; };
+
+//| 定义变量 ///////////////////////
+var sum=5; 
+sum = myAdd(sum, 10);
+MsgBox("myAdd(5,10) => "+ sum, "测试自定义函数");
+
+//| 集成 OpenCvSharp 版本 //////////
+MsgBox(OpenCvSharp.Cv2.GetVersionString(), "集成 OpenCv 版本");
+
+//| 查找图块 ///////////////////////
+var points = FindTarget("cursor.jpg");
+MsgBox("'cursor.jpg' 目标数："+ points.Length +"\r\n* 将通过鼠标指向其位置...", "FUN: FindTarget");
+foreach (var pt in points)
+{
+  MouseMove(pt.X, pt.Y);
+  Sleep(1000);
+}
+
+
