@@ -38,8 +38,6 @@ namespace AutoBrowser
             imgH = baseImage.Height;
             Rect = new Rectangle();
             RectReady = false;
-            this.TransparencyKey = SystemColors.AppWorkspace;
-            this.AllowTransparency = true;
         }
 
         private void FrmScreen_MouseDoubleClick(object sender, MouseEventArgs e)
