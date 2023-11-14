@@ -51,4 +51,4 @@ void KeyUp(string key); //| 模拟按抬起键盘某键, KeyUp("A"); KeyUp("Alt"
 * LikeColor/LikeColorValue
    *颜色模糊比较*
 ---
-![主界面]("./P1.png")
+![主界面](./P1.jpg)
