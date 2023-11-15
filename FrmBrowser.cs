@@ -162,11 +162,6 @@ namespace AutoBrowser
 
         private void btnToggleTools_Click(object sender, EventArgs e)
         {
-            //this.Text = "#"+ ScriptUtils.MsgBox(1, 2, 0x40021, 1500);
-            ScriptUtils.MsgBox(OpenCvSharp.Cv2.GetVersionString());
-            this.Text = ScriptUtils.InputBox("Title", "123", "descript");
-
-
             //blinkBrowser1.InvokeJS("alert('abc123')");
             m_flag_show_script_tools = !m_flag_show_script_tools;
             splitContainer1.SplitterDistance = this.Width - (m_flag_show_script_tools ? 200 : 0);
