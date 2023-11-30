@@ -47,8 +47,10 @@ namespace AutoBrowser
             this.cmnuCursorScript = new System.Windows.Forms.ToolStripMenuItem();
             this.cmnuCursorScriptLClick = new System.Windows.Forms.ToolStripMenuItem();
             this.cmnuCursorScriptRClick = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmnuCursorScriptColorValue = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.cmnuCursorScriptColorRGB = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmnuCursorScriptColorValue = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmnuCursorScriptLikeColor = new System.Windows.Forms.ToolStripMenuItem();
             this.cmnuCursorMoveTo = new System.Windows.Forms.ToolStripMenuItem();
             this.cmnuCursorGetColor = new System.Windows.Forms.ToolStripMenuItem();
             this.lbtnCursorInfoClose = new System.Windows.Forms.Label();
@@ -99,8 +101,14 @@ namespace AutoBrowser
             this.tbsLookHP = new System.Windows.Forms.ToolStripButton();
             this.tbsLookMP = new System.Windows.Forms.ToolStripButton();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.cmnuCursorScriptLikeColor = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.grpConsole = new System.Windows.Forms.GroupBox();
+            this.lblToggleConsole = new System.Windows.Forms.Label();
+            this.axtConsole = new System.Windows.Forms.TextBox();
+            this.splitConsole = new System.Windows.Forms.Splitter();
+            this.lbtnClearLog = new System.Windows.Forms.Label();
+            this.lblConsolePop = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.txtConsole = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -119,6 +127,7 @@ namespace AutoBrowser
             this.pelBorderMP.SuspendLayout();
             this.pelBorderHP.SuspendLayout();
             this.tbsBar.SuspendLayout();
+            this.grpConsole.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -135,6 +144,8 @@ namespace AutoBrowser
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.grpScriptBody);
+            this.splitContainer1.Panel2.Controls.Add(this.splitConsole);
+            this.splitContainer1.Panel2.Controls.Add(this.grpConsole);
             this.splitContainer1.Panel2.Controls.Add(this.grpCursorInfo);
             this.splitContainer1.Panel2.Controls.Add(this.splitTargetList);
             this.splitContainer1.Panel2.Controls.Add(this.grpTargets);
@@ -185,11 +196,13 @@ namespace AutoBrowser
             // 
             this.btnToggleTools.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnToggleTools.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnToggleTools.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnToggleTools.Location = new System.Drawing.Point(577, 3);
             this.btnToggleTools.Name = "btnToggleTools";
             this.btnToggleTools.Size = new System.Drawing.Size(23, 20);
             this.btnToggleTools.TabIndex = 12;
-            this.btnToggleTools.Text = "》";
+            this.btnToggleTools.Text = "→";
+            this.toolTip1.SetToolTip(this.btnToggleTools, "隐藏/显示 右侧操作面板");
             this.btnToggleTools.UseVisualStyleBackColor = true;
             this.btnToggleTools.Click += new System.EventHandler(this.btnToggleTools_Click);
             // 
@@ -229,11 +242,12 @@ namespace AutoBrowser
             // 
             // grpScriptBody
             // 
+            this.grpScriptBody.Controls.Add(this.lblToggleConsole);
             this.grpScriptBody.Controls.Add(this.txtScriptBody);
             this.grpScriptBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpScriptBody.Location = new System.Drawing.Point(0, 164);
             this.grpScriptBody.Name = "grpScriptBody";
-            this.grpScriptBody.Size = new System.Drawing.Size(186, 168);
+            this.grpScriptBody.Size = new System.Drawing.Size(186, 75);
             this.grpScriptBody.TabIndex = 2;
             this.grpScriptBody.TabStop = false;
             this.grpScriptBody.Text = "脚本内容";
@@ -246,7 +260,7 @@ namespace AutoBrowser
             this.txtScriptBody.Multiline = true;
             this.txtScriptBody.Name = "txtScriptBody";
             this.txtScriptBody.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtScriptBody.Size = new System.Drawing.Size(180, 148);
+            this.txtScriptBody.Size = new System.Drawing.Size(180, 55);
             this.txtScriptBody.TabIndex = 0;
             this.txtScriptBody.WordWrap = false;
             // 
@@ -296,7 +310,7 @@ namespace AutoBrowser
             this.cmnuCursorMoveTo,
             this.cmnuCursorGetColor});
             this.cmnuCursorInfo.Name = "cmnuCursorInfo";
-            this.cmnuCursorInfo.Size = new System.Drawing.Size(181, 92);
+            this.cmnuCursorInfo.Size = new System.Drawing.Size(125, 70);
             // 
             // cmnuCursorScript
             // 
@@ -308,48 +322,60 @@ namespace AutoBrowser
             this.cmnuCursorScriptColorValue,
             this.cmnuCursorScriptLikeColor});
             this.cmnuCursorScript.Name = "cmnuCursorScript";
-            this.cmnuCursorScript.Size = new System.Drawing.Size(180, 22);
+            this.cmnuCursorScript.Size = new System.Drawing.Size(124, 22);
             this.cmnuCursorScript.Text = "脚本";
             // 
             // cmnuCursorScriptLClick
             // 
             this.cmnuCursorScriptLClick.Name = "cmnuCursorScriptLClick";
-            this.cmnuCursorScriptLClick.Size = new System.Drawing.Size(180, 22);
+            this.cmnuCursorScriptLClick.Size = new System.Drawing.Size(144, 22);
             this.cmnuCursorScriptLClick.Text = "点击坐标(左)";
             this.cmnuCursorScriptLClick.Click += new System.EventHandler(this.cmnuCursorScriptLClick_Click);
             // 
             // cmnuCursorScriptRClick
             // 
             this.cmnuCursorScriptRClick.Name = "cmnuCursorScriptRClick";
-            this.cmnuCursorScriptRClick.Size = new System.Drawing.Size(180, 22);
+            this.cmnuCursorScriptRClick.Size = new System.Drawing.Size(144, 22);
             this.cmnuCursorScriptRClick.Text = "点击坐标(右)";
             this.cmnuCursorScriptRClick.Click += new System.EventHandler(this.cmnuCursorScriptRClick_Click);
             // 
-            // cmnuCursorScriptColorValue
+            // toolStripMenuItem2
             // 
-            this.cmnuCursorScriptColorValue.Name = "cmnuCursorScriptColorValue";
-            this.cmnuCursorScriptColorValue.Size = new System.Drawing.Size(180, 22);
-            this.cmnuCursorScriptColorValue.Text = "对比颜色";
-            this.cmnuCursorScriptColorValue.Click += new System.EventHandler(this.cmnuCursorScriptColorValue_Click);
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(141, 6);
             // 
             // cmnuCursorScriptColorRGB
             // 
             this.cmnuCursorScriptColorRGB.Name = "cmnuCursorScriptColorRGB";
-            this.cmnuCursorScriptColorRGB.Size = new System.Drawing.Size(180, 22);
+            this.cmnuCursorScriptColorRGB.Size = new System.Drawing.Size(144, 22);
             this.cmnuCursorScriptColorRGB.Text = "查看RGB";
             this.cmnuCursorScriptColorRGB.Click += new System.EventHandler(this.cmnuCursorScriptColorRGB_Click);
+            // 
+            // cmnuCursorScriptColorValue
+            // 
+            this.cmnuCursorScriptColorValue.Name = "cmnuCursorScriptColorValue";
+            this.cmnuCursorScriptColorValue.Size = new System.Drawing.Size(144, 22);
+            this.cmnuCursorScriptColorValue.Text = "对比颜色";
+            this.cmnuCursorScriptColorValue.Click += new System.EventHandler(this.cmnuCursorScriptColorValue_Click);
+            // 
+            // cmnuCursorScriptLikeColor
+            // 
+            this.cmnuCursorScriptLikeColor.Name = "cmnuCursorScriptLikeColor";
+            this.cmnuCursorScriptLikeColor.Size = new System.Drawing.Size(144, 22);
+            this.cmnuCursorScriptLikeColor.Text = "模糊比色";
+            this.cmnuCursorScriptLikeColor.Click += new System.EventHandler(this.cmnuCursorScriptLikeColor_Click);
             // 
             // cmnuCursorMoveTo
             // 
             this.cmnuCursorMoveTo.Name = "cmnuCursorMoveTo";
-            this.cmnuCursorMoveTo.Size = new System.Drawing.Size(180, 22);
+            this.cmnuCursorMoveTo.Size = new System.Drawing.Size(124, 22);
             this.cmnuCursorMoveTo.Text = "指向坐标";
             this.cmnuCursorMoveTo.Click += new System.EventHandler(this.cmnuCursorMoveTo_Click);
             // 
             // cmnuCursorGetColor
             // 
             this.cmnuCursorGetColor.Name = "cmnuCursorGetColor";
-            this.cmnuCursorGetColor.Size = new System.Drawing.Size(180, 22);
+            this.cmnuCursorGetColor.Size = new System.Drawing.Size(124, 22);
             this.cmnuCursorGetColor.Text = "重新取色";
             this.cmnuCursorGetColor.Click += new System.EventHandler(this.cmnuCursorGetColor_Click);
             // 
@@ -364,6 +390,7 @@ namespace AutoBrowser
             this.lbtnCursorInfoClose.Size = new System.Drawing.Size(17, 12);
             this.lbtnCursorInfoClose.TabIndex = 5;
             this.lbtnCursorInfoClose.Text = "×";
+            this.toolTip1.SetToolTip(this.lbtnCursorInfoClose, "关闭坐标信息窗口");
             this.lbtnCursorInfoClose.Click += new System.EventHandler(this.lbtnCursorInfoClose_Click);
             // 
             // splitTargetList
@@ -413,6 +440,7 @@ namespace AutoBrowser
             this.lbtnTargetsToggleView.Size = new System.Drawing.Size(13, 12);
             this.lbtnTargetsToggleView.TabIndex = 4;
             this.lbtnTargetsToggleView.Text = "☷";
+            this.toolTip1.SetToolTip(this.lbtnTargetsToggleView, "切换视图");
             this.lbtnTargetsToggleView.Click += new System.EventHandler(this.lbtnTargetsToggleView_Click);
             // 
             // lbtnRefreshTargets
@@ -426,6 +454,7 @@ namespace AutoBrowser
             this.lbtnRefreshTargets.Size = new System.Drawing.Size(13, 12);
             this.lbtnRefreshTargets.TabIndex = 4;
             this.lbtnRefreshTargets.Text = "↺";
+            this.toolTip1.SetToolTip(this.lbtnRefreshTargets, "重新加载目标");
             this.lbtnRefreshTargets.Click += new System.EventHandler(this.lbtnRefreshTargets_Click);
             // 
             // lvTargets
@@ -563,6 +592,7 @@ namespace AutoBrowser
             this.lbtnRefreshScripts.Size = new System.Drawing.Size(13, 12);
             this.lbtnRefreshScripts.TabIndex = 3;
             this.lbtnRefreshScripts.Text = "↺";
+            this.toolTip1.SetToolTip(this.lbtnRefreshScripts, "重新加载脚本");
             this.lbtnRefreshScripts.Click += new System.EventHandler(this.lbtnRefreshScripts_Click);
             // 
             // lblScriptStatus
@@ -833,17 +863,93 @@ namespace AutoBrowser
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // cmnuCursorScriptLikeColor
+            // grpConsole
             // 
-            this.cmnuCursorScriptLikeColor.Name = "cmnuCursorScriptLikeColor";
-            this.cmnuCursorScriptLikeColor.Size = new System.Drawing.Size(180, 22);
-            this.cmnuCursorScriptLikeColor.Text = "模糊比色";
-            this.cmnuCursorScriptLikeColor.Click += new System.EventHandler(this.cmnuCursorScriptLikeColor_Click);
+            this.grpConsole.Controls.Add(this.lblConsolePop);
+            this.grpConsole.Controls.Add(this.lbtnClearLog);
+            this.grpConsole.Controls.Add(this.axtConsole);
+            this.grpConsole.Controls.Add(this.txtConsole);
+            this.grpConsole.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.grpConsole.Location = new System.Drawing.Point(0, 242);
+            this.grpConsole.Name = "grpConsole";
+            this.grpConsole.Size = new System.Drawing.Size(186, 90);
+            this.grpConsole.TabIndex = 8;
+            this.grpConsole.TabStop = false;
+            this.grpConsole.Text = "控制台";
+            this.grpConsole.Visible = false;
             // 
-            // toolStripMenuItem2
+            // lblToggleConsole
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+            this.lblToggleConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblToggleConsole.AutoSize = true;
+            this.lblToggleConsole.BackColor = System.Drawing.Color.Transparent;
+            this.lblToggleConsole.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblToggleConsole.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblToggleConsole.Location = new System.Drawing.Point(168, 58);
+            this.lblToggleConsole.Name = "lblToggleConsole";
+            this.lblToggleConsole.Size = new System.Drawing.Size(13, 12);
+            this.lblToggleConsole.TabIndex = 6;
+            this.lblToggleConsole.Text = "▀";
+            this.toolTip1.SetToolTip(this.lblToggleConsole, "显示/隐藏 控制台窗口");
+            this.lblToggleConsole.Click += new System.EventHandler(this.lblToggleConsole_Click);
+            // 
+            // axtConsole
+            // 
+            this.axtConsole.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.axtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axtConsole.Location = new System.Drawing.Point(3, 17);
+            this.axtConsole.Multiline = true;
+            this.axtConsole.Name = "axtConsole";
+            this.axtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.axtConsole.Size = new System.Drawing.Size(180, 49);
+            this.axtConsole.TabIndex = 7;
+            this.axtConsole.WordWrap = false;
+            // 
+            // splitConsole
+            // 
+            this.splitConsole.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.splitConsole.Location = new System.Drawing.Point(0, 239);
+            this.splitConsole.Name = "splitConsole";
+            this.splitConsole.Size = new System.Drawing.Size(186, 3);
+            this.splitConsole.TabIndex = 9;
+            this.splitConsole.TabStop = false;
+            // 
+            // lbtnClearLog
+            // 
+            this.lbtnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbtnClearLog.AutoSize = true;
+            this.lbtnClearLog.BackColor = System.Drawing.Color.Transparent;
+            this.lbtnClearLog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbtnClearLog.Location = new System.Drawing.Point(148, 1);
+            this.lbtnClearLog.Name = "lbtnClearLog";
+            this.lbtnClearLog.Size = new System.Drawing.Size(14, 12);
+            this.lbtnClearLog.TabIndex = 8;
+            this.lbtnClearLog.Text = "⛞";
+            this.toolTip1.SetToolTip(this.lbtnClearLog, "清除控制台");
+            this.lbtnClearLog.Click += new System.EventHandler(this.lbtnClearLog_Click);
+            // 
+            // lblConsolePop
+            // 
+            this.lblConsolePop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblConsolePop.AutoSize = true;
+            this.lblConsolePop.BackColor = System.Drawing.Color.Transparent;
+            this.lblConsolePop.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblConsolePop.Location = new System.Drawing.Point(168, 1);
+            this.lblConsolePop.Name = "lblConsolePop";
+            this.lblConsolePop.Size = new System.Drawing.Size(14, 12);
+            this.lblConsolePop.TabIndex = 8;
+            this.lblConsolePop.Text = "⧉";
+            this.toolTip1.SetToolTip(this.lblConsolePop, "控制台浮动显示");
+            this.lblConsolePop.Click += new System.EventHandler(this.lblConsolePop_Click);
+            // 
+            // txtConsole
+            // 
+            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.txtConsole.Location = new System.Drawing.Point(3, 66);
+            this.txtConsole.Name = "txtConsole";
+            this.txtConsole.Size = new System.Drawing.Size(180, 21);
+            this.txtConsole.TabIndex = 9;
+            this.txtConsole.Visible = false;
             // 
             // FrmBrowser
             // 
@@ -881,6 +987,8 @@ namespace AutoBrowser
             this.pelBorderHP.PerformLayout();
             this.tbsBar.ResumeLayout(false);
             this.tbsBar.PerformLayout();
+            this.grpConsole.ResumeLayout(false);
+            this.grpConsole.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -958,6 +1066,14 @@ namespace AutoBrowser
         private System.Windows.Forms.ToolStripMenuItem cmnuCursorScriptRClick;
         private System.Windows.Forms.ToolStripMenuItem cmnuCursorScriptLikeColor;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.Splitter splitConsole;
+        private System.Windows.Forms.GroupBox grpConsole;
+        private System.Windows.Forms.TextBox axtConsole;
+        private System.Windows.Forms.Label lblToggleConsole;
+        private System.Windows.Forms.Label lbtnClearLog;
+        private System.Windows.Forms.Label lblConsolePop;
+        private System.Windows.Forms.TextBox txtConsole;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

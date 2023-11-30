@@ -58,12 +58,102 @@ namespace AutoBrowser
 
         private System.IO.DirectoryInfo m_target_folder;
 
+        private Form loadForm(string formName)
+        {
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f.Name.Equals(formName)){ return f; }
+            }
+            try
+            {
+                Type t = Type.GetType(formName);
+                if (t != null || (t = Type.GetType("AutoBrowser." + formName)) != null)
+                {
+                    object o = Activator.CreateInstance(t);
+                    if (o is Form) { return (Form)o; }
+                }
+            }
+            catch { }
+
+            Form frm = new Form();
+            frm.Icon = this.Icon;
+            frm.Name = formName;
+            return frm;
+        }
+        private void PopControl(Control ctrl, string title=null)
+        {
+            if (ctrl == null) { return; }
+            string _name = ctrl.Name;
+            Form frm = loadForm(_name);
+            frm.Text = title ?? _name;
+            if (frm.Tag == null)
+            {
+                frm.Tag = ctrl.Parent;
+                frm.Dock = ctrl.Dock;
+
+                ctrl.Parent = frm;
+                ctrl.Dock = DockStyle.Fill;
+                
+                EventHandler _ctrl_visable_changed = (s, e) => {
+                    frm.Visible = true;
+                    frm.Visible = ctrl.Visible; 
+                };
+
+                ctrl.VisibleChanged += _ctrl_visable_changed;
+                frm.FormClosed += (s,e) => { 
+                    ctrl.Dock = frm.Dock; 
+                    ctrl.Parent = (Control)frm.Tag;
+                    ctrl.VisibleChanged -= _ctrl_visable_changed;
+                };
+            }
+            frm.Show();
+            frm.Left = this.Right;
+            frm.Top = this.Top;
+            frm.Height = this.Height;
+        }
+
+
+        class ConsoleLogTextWriter : System.IO.TextWriter
+        {
+            TextBox txtLog;
+            public ConsoleLogTextWriter(TextBox txt_log) : base() { this.txtLog = txt_log; }
+
+            public override Encoding Encoding { get { return Encoding.UTF8; } }
+
+            public override void Write(string value)
+            {
+                if (txtLog != null)
+                {
+                    try { txtLog.Invoke((Action)delegate { txtLog.Text += value; }); } catch { }
+                }
+            }
+            public override void WriteLine(string value)
+            {
+                if (txtLog != null)
+                {
+                    try { txtLog.Invoke((Action)delegate { txtLog.Text += value + "\r\n"; }); }catch { }
+                }
+            }
+            public override void Close()
+            {
+                base.Close();
+            }
+        }
+
+        ConsoleLogTextWriter clog;
 
         public FrmBrowser()
         {
             InitializeComponent();
 
+            lblToggleConsole.Top = grpScriptBody.Height - 17;
+
             this.Icon = IMKCode.API.IconHelper.ExtractIcon(0);
+
+            clog = new ConsoleLogTextWriter(axtConsole);
+            Console.SetOut(clog);
+
+
         }
 
         public void Navigate(string url)
@@ -165,7 +255,7 @@ namespace AutoBrowser
             //blinkBrowser1.InvokeJS("alert('abc123')");
             m_flag_show_script_tools = !m_flag_show_script_tools;
             splitContainer1.SplitterDistance = this.Width - (m_flag_show_script_tools ? 200 : 0);
-            btnToggleTools.Text = m_flag_show_script_tools ? "》" : "《";
+            btnToggleTools.Text = m_flag_show_script_tools ? "→" : "←"; //| 》《 ❯❮ >< →←
             if (m_flag_show_script_tools)
             {
                 splitContainer1.Panel2.Show();
@@ -236,11 +326,11 @@ namespace AutoBrowser
 
         private void btnScriptRecord_Click(object sender, EventArgs e)
         {
-            if (m_flag_work_area_full_screen && MessageBox.Show("* 注意当前为全局坐标方式，窗口内坐标可能发生变化！\r\n\r\n是否继续以全局坐标录制？", "全局坐标：适合窗口外操作", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
+            if (m_flag_work_area_full_screen && MessageBox.Show("* 注意当前为【全局坐标】方式，窗口内坐标可能发生变化！\r\n\r\n是否继续以全局坐标录制？", "全局坐标：适合窗口外操作", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
             {
                 return;
             }
-            else if (!m_flag_work_area_full_screen && MessageBox.Show("* 注意当前为局部坐标方式，窗口以外坐标可能发生变化！\r\n\r\n是否继续以局部坐标录制？", "局部坐标：适合窗口内操作", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
+            else if (!m_flag_work_area_full_screen && MessageBox.Show("* 注意当前为【局部坐标】方式，窗口以外坐标可能发生变化！\r\n\r\n是否继续以局部坐标录制？", "局部坐标：适合窗口内操作", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
             {
                 return;
             }
@@ -566,6 +656,23 @@ foreach (var pt in points)
 
         }
 
+        private void lblToggleConsole_Click(object sender, EventArgs e)
+        {
+            splitConsole.Visible =
+            grpConsole.Visible = !grpConsole.Visible;
+            lblToggleConsole.Text = grpConsole.Visible ? "〓" : "▀"; //⬓⬜□■〓▀
+
+        }
+
+        private void lbtnClearLog_Click(object sender, EventArgs e)
+        {
+            axtConsole.Text = "";
+        }
+        private void lblConsolePop_Click(object sender, EventArgs e)
+        {
+            PopControl(grpConsole, "Console");
+        }
+
         private void tbsWorkArea_Click(object sender, EventArgs e)
         {
             m_flag_work_area_full_screen = !m_flag_work_area_full_screen;
@@ -851,5 +958,6 @@ else
 , cc_cursorColor.GetValue().ToString("X2")
 , cc_cursorColor.GetValue());
         }
+
     }
 }

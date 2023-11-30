@@ -43,7 +43,7 @@ Func<int, int, int> myAdd = (par_a, par_b) => { return par_a + par_b; };
 //| 定义变量 ///////////////////////
 var sum=5; 
 sum = myAdd(sum, 10);
-MsgBox("myAdd(5,10) => "+ sum, "测试自定义函数");
+MsgBox("自定义函数：\r\nmyAdd(5,10) => "+ sum, "测试自定义函数");
 
 //| 集成 OpenCvSharp 版本 //////////
 MsgBox(OpenCvSharp.Cv2.GetVersionString(), "集成 OpenCv 版本");

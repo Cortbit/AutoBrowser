@@ -24,6 +24,7 @@ namespace AutoBrowser
             return IMKCode.Api.MessageBoxTimeoutA(IntPtr.Zero, ""+msg, ""+title, 0, 0, timeout);
         }
 
+
         /// <summary>
         /// 
         /// </summary>
