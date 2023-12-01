@@ -13,6 +13,8 @@ namespace AutoBrowser.Ctrls
         public string PlaceHolderText { get; set; }
 
         private int m_tab_width = 3;
+        
+        [Description("获取和设置 Tab 占位字符数")]
         public int TabWidth { get { return m_tab_width; } set { if (m_tab_width != value) { m_tab_width = value; this.setTabWidth(); } } }
 
         protected override void WndProc(ref Message m)
@@ -51,10 +53,6 @@ namespace AutoBrowser.Ctrls
                 float characterWidth = (int)graphics.MeasureString("M", this.Font).Width;
                 IMKCode.Api.SendMessage(base.Handle, EM_SETTABSTOPS, 1, new int[] { Convert.ToInt32(TabWidth * characterWidth) });
             }
-        }
-
-        public HoldTextBox()
-        {
         }
 
     }
