@@ -80,7 +80,7 @@ namespace AutoBrowser
             frm.Name = formName;
             return frm;
         }
-        private void PopControl(Control ctrl, string title=null)
+        private void PopControl(Control ctrl, string title=null, EventHandler onclose=null)
         {
             if (ctrl == null) { return; }
             string _name = ctrl.Name;
@@ -104,6 +104,10 @@ namespace AutoBrowser
                     ctrl.Dock = frm.Dock; 
                     ctrl.Parent = (Control)frm.Tag;
                     ctrl.VisibleChanged -= _ctrl_visable_changed;
+                    if (onclose != null)
+                    {
+                        onclose.Invoke(s, e);
+                    }
                 };
             }
             frm.Show();
@@ -670,7 +674,7 @@ foreach (var pt in points)
         }
         private void lblConsolePop_Click(object sender, EventArgs e)
         {
-            PopControl(grpConsole, "Console");
+            PopControl(grpConsole, "Console", (a,b) => { splitTargetList.SendToBack(); grpTargets.SendToBack();});
         }
 
         private void tbsWorkArea_Click(object sender, EventArgs e)
