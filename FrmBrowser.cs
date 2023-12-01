@@ -135,7 +135,7 @@ namespace AutoBrowser
             {
                 if (txtLog != null)
                 {
-                    try { txtLog.Invoke((Action)delegate { txtLog.Text += value + "\r\n"; }); }catch { }
+                    try { txtLog.Invoke((Action)delegate { txtLog.AppendText(value + "\r\n"); }); }catch { }
                 }
             }
             public override void Close()
@@ -150,13 +150,14 @@ namespace AutoBrowser
         {
             InitializeComponent();
 
+            txtScriptBody.TabWidth = 2;
+
             lblToggleConsole.Top = grpScriptBody.Height - 17;
 
             this.Icon = IMKCode.API.IconHelper.ExtractIcon(0);
 
             clog = new ConsoleLogTextWriter(axtConsole);
             Console.SetOut(clog);
-
 
         }
 
@@ -168,6 +169,8 @@ namespace AutoBrowser
 
         private void FrmBrowser_Load(object sender, EventArgs e)
         {
+            initLayout();
+
             ScriptUtils.RM = new RecordManager(this.Handle);
             recordManager = new RecordManager(this.Handle);
 
@@ -185,7 +188,7 @@ namespace AutoBrowser
             blinkBrowser1.OnCreateViewEvent += BlinkBrowser1_OnCreateViewEvent;
             blinkBrowser1.Url = "https://www.baidu.com/";
 
-            txtScriptBody.Text = @"/** 请选择脚本文件 **/";
+            txtScriptBody.PlaceHolderText = @"/** \n请选择脚本文件\n **/";
 
             IMKCode.Api.RegisterHotKey(this.Handle, 9001, (int)IMKCode.Api.KeyModifiers.None, (int)Keys.F10);
 
@@ -198,6 +201,13 @@ namespace AutoBrowser
             timer1.Enabled = true;
         }
 
+        private void initLayout()
+        {
+            splitConsole.Visible =
+            grpConsole.Visible = false;
+
+            grpCursorInfo.Visible = false;
+        }
 
 
         private IntPtr BlinkBrowser1_OnCreateViewEvent(IntPtr webView, IntPtr param, wkeNavigationType navigationType, string url)
@@ -674,7 +684,7 @@ foreach (var pt in points)
         }
         private void lblConsolePop_Click(object sender, EventArgs e)
         {
-            PopControl(grpConsole, "Console", (a,b) => { splitTargetList.SendToBack(); grpTargets.SendToBack();});
+            PopControl(grpConsole, "Console", (a,b) => { grpCursorInfo.SendToBack(); splitTargetList.SendToBack(); grpTargets.SendToBack();});
         }
 
         private void tbsWorkArea_Click(object sender, EventArgs e)

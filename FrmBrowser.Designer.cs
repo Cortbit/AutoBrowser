@@ -39,7 +39,14 @@ namespace AutoBrowser
             this.btnBack = new System.Windows.Forms.Button();
             this.cbxUrl = new System.Windows.Forms.ComboBox();
             this.grpScriptBody = new System.Windows.Forms.GroupBox();
-            this.txtScriptBody = new System.Windows.Forms.TextBox();
+            this.lblToggleConsole = new System.Windows.Forms.Label();
+            this.txtScriptBody = new AutoBrowser.Ctrls.HoldTextBox();
+            this.splitConsole = new System.Windows.Forms.Splitter();
+            this.grpConsole = new System.Windows.Forms.GroupBox();
+            this.lblConsolePop = new System.Windows.Forms.Label();
+            this.lbtnClearLog = new System.Windows.Forms.Label();
+            this.axtConsole = new System.Windows.Forms.TextBox();
+            this.txtConsole = new System.Windows.Forms.TextBox();
             this.grpCursorInfo = new System.Windows.Forms.GroupBox();
             this.picCursorInfo = new System.Windows.Forms.PictureBox();
             this.txtCursorInfo = new System.Windows.Forms.TextBox();
@@ -101,14 +108,7 @@ namespace AutoBrowser
             this.tbsLookHP = new System.Windows.Forms.ToolStripButton();
             this.tbsLookMP = new System.Windows.Forms.ToolStripButton();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.grpConsole = new System.Windows.Forms.GroupBox();
-            this.lblToggleConsole = new System.Windows.Forms.Label();
-            this.axtConsole = new System.Windows.Forms.TextBox();
-            this.splitConsole = new System.Windows.Forms.Splitter();
-            this.lbtnClearLog = new System.Windows.Forms.Label();
-            this.lblConsolePop = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.txtConsole = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -116,6 +116,7 @@ namespace AutoBrowser
             this.pelBrowser.SuspendLayout();
             this.pelUrl.SuspendLayout();
             this.grpScriptBody.SuspendLayout();
+            this.grpConsole.SuspendLayout();
             this.grpCursorInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picCursorInfo)).BeginInit();
             this.cmnuCursorInfo.SuspendLayout();
@@ -127,7 +128,6 @@ namespace AutoBrowser
             this.pelBorderMP.SuspendLayout();
             this.pelBorderHP.SuspendLayout();
             this.tbsBar.SuspendLayout();
-            this.grpConsole.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -252,17 +252,106 @@ namespace AutoBrowser
             this.grpScriptBody.TabStop = false;
             this.grpScriptBody.Text = "脚本内容";
             // 
+            // lblToggleConsole
+            // 
+            this.lblToggleConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblToggleConsole.AutoSize = true;
+            this.lblToggleConsole.BackColor = System.Drawing.Color.Transparent;
+            this.lblToggleConsole.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblToggleConsole.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.lblToggleConsole.Location = new System.Drawing.Point(168, 58);
+            this.lblToggleConsole.Name = "lblToggleConsole";
+            this.lblToggleConsole.Size = new System.Drawing.Size(13, 12);
+            this.lblToggleConsole.TabIndex = 6;
+            this.lblToggleConsole.Text = "▀";
+            this.toolTip1.SetToolTip(this.lblToggleConsole, "显示/隐藏 控制台窗口");
+            this.lblToggleConsole.Click += new System.EventHandler(this.lblToggleConsole_Click);
+            // 
             // txtScriptBody
             // 
+            this.txtScriptBody.AcceptsTab = true;
             this.txtScriptBody.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtScriptBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtScriptBody.Location = new System.Drawing.Point(3, 17);
             this.txtScriptBody.Multiline = true;
             this.txtScriptBody.Name = "txtScriptBody";
+            this.txtScriptBody.PlaceHolderText = null;
             this.txtScriptBody.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtScriptBody.Size = new System.Drawing.Size(180, 55);
             this.txtScriptBody.TabIndex = 0;
             this.txtScriptBody.WordWrap = false;
+            // 
+            // splitConsole
+            // 
+            this.splitConsole.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.splitConsole.Location = new System.Drawing.Point(0, 239);
+            this.splitConsole.Name = "splitConsole";
+            this.splitConsole.Size = new System.Drawing.Size(186, 3);
+            this.splitConsole.TabIndex = 9;
+            this.splitConsole.TabStop = false;
+            // 
+            // grpConsole
+            // 
+            this.grpConsole.Controls.Add(this.lblConsolePop);
+            this.grpConsole.Controls.Add(this.lbtnClearLog);
+            this.grpConsole.Controls.Add(this.axtConsole);
+            this.grpConsole.Controls.Add(this.txtConsole);
+            this.grpConsole.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.grpConsole.Location = new System.Drawing.Point(0, 242);
+            this.grpConsole.Name = "grpConsole";
+            this.grpConsole.Size = new System.Drawing.Size(186, 90);
+            this.grpConsole.TabIndex = 8;
+            this.grpConsole.TabStop = false;
+            this.grpConsole.Text = "控制台";
+            // 
+            // lblConsolePop
+            // 
+            this.lblConsolePop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblConsolePop.AutoSize = true;
+            this.lblConsolePop.BackColor = System.Drawing.Color.Transparent;
+            this.lblConsolePop.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lblConsolePop.Location = new System.Drawing.Point(168, 1);
+            this.lblConsolePop.Name = "lblConsolePop";
+            this.lblConsolePop.Size = new System.Drawing.Size(14, 12);
+            this.lblConsolePop.TabIndex = 8;
+            this.lblConsolePop.Text = "⧉";
+            this.toolTip1.SetToolTip(this.lblConsolePop, "控制台浮动显示");
+            this.lblConsolePop.Click += new System.EventHandler(this.lblConsolePop_Click);
+            // 
+            // lbtnClearLog
+            // 
+            this.lbtnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbtnClearLog.AutoSize = true;
+            this.lbtnClearLog.BackColor = System.Drawing.Color.Transparent;
+            this.lbtnClearLog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbtnClearLog.Location = new System.Drawing.Point(148, 1);
+            this.lbtnClearLog.Name = "lbtnClearLog";
+            this.lbtnClearLog.Size = new System.Drawing.Size(14, 12);
+            this.lbtnClearLog.TabIndex = 8;
+            this.lbtnClearLog.Text = "⛞";
+            this.toolTip1.SetToolTip(this.lbtnClearLog, "清除控制台");
+            this.lbtnClearLog.Click += new System.EventHandler(this.lbtnClearLog_Click);
+            // 
+            // axtConsole
+            // 
+            this.axtConsole.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.axtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axtConsole.Location = new System.Drawing.Point(3, 17);
+            this.axtConsole.Multiline = true;
+            this.axtConsole.Name = "axtConsole";
+            this.axtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.axtConsole.Size = new System.Drawing.Size(180, 49);
+            this.axtConsole.TabIndex = 7;
+            this.axtConsole.WordWrap = false;
+            // 
+            // txtConsole
+            // 
+            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.txtConsole.Location = new System.Drawing.Point(3, 66);
+            this.txtConsole.Name = "txtConsole";
+            this.txtConsole.Size = new System.Drawing.Size(180, 21);
+            this.txtConsole.TabIndex = 9;
+            this.txtConsole.Visible = false;
             // 
             // grpCursorInfo
             // 
@@ -276,7 +365,6 @@ namespace AutoBrowser
             this.grpCursorInfo.TabIndex = 7;
             this.grpCursorInfo.TabStop = false;
             this.grpCursorInfo.Text = "坐标信息";
-            this.grpCursorInfo.Visible = false;
             // 
             // picCursorInfo
             // 
@@ -863,94 +951,6 @@ namespace AutoBrowser
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // grpConsole
-            // 
-            this.grpConsole.Controls.Add(this.lblConsolePop);
-            this.grpConsole.Controls.Add(this.lbtnClearLog);
-            this.grpConsole.Controls.Add(this.axtConsole);
-            this.grpConsole.Controls.Add(this.txtConsole);
-            this.grpConsole.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.grpConsole.Location = new System.Drawing.Point(0, 242);
-            this.grpConsole.Name = "grpConsole";
-            this.grpConsole.Size = new System.Drawing.Size(186, 90);
-            this.grpConsole.TabIndex = 8;
-            this.grpConsole.TabStop = false;
-            this.grpConsole.Text = "控制台";
-            this.grpConsole.Visible = false;
-            // 
-            // lblToggleConsole
-            // 
-            this.lblToggleConsole.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblToggleConsole.AutoSize = true;
-            this.lblToggleConsole.BackColor = System.Drawing.Color.Transparent;
-            this.lblToggleConsole.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblToggleConsole.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.lblToggleConsole.Location = new System.Drawing.Point(168, 58);
-            this.lblToggleConsole.Name = "lblToggleConsole";
-            this.lblToggleConsole.Size = new System.Drawing.Size(13, 12);
-            this.lblToggleConsole.TabIndex = 6;
-            this.lblToggleConsole.Text = "▀";
-            this.toolTip1.SetToolTip(this.lblToggleConsole, "显示/隐藏 控制台窗口");
-            this.lblToggleConsole.Click += new System.EventHandler(this.lblToggleConsole_Click);
-            // 
-            // axtConsole
-            // 
-            this.axtConsole.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.axtConsole.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axtConsole.Location = new System.Drawing.Point(3, 17);
-            this.axtConsole.Multiline = true;
-            this.axtConsole.Name = "axtConsole";
-            this.axtConsole.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.axtConsole.Size = new System.Drawing.Size(180, 49);
-            this.axtConsole.TabIndex = 7;
-            this.axtConsole.WordWrap = false;
-            // 
-            // splitConsole
-            // 
-            this.splitConsole.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.splitConsole.Location = new System.Drawing.Point(0, 239);
-            this.splitConsole.Name = "splitConsole";
-            this.splitConsole.Size = new System.Drawing.Size(186, 3);
-            this.splitConsole.TabIndex = 9;
-            this.splitConsole.TabStop = false;
-            // 
-            // lbtnClearLog
-            // 
-            this.lbtnClearLog.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbtnClearLog.AutoSize = true;
-            this.lbtnClearLog.BackColor = System.Drawing.Color.Transparent;
-            this.lbtnClearLog.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lbtnClearLog.Location = new System.Drawing.Point(148, 1);
-            this.lbtnClearLog.Name = "lbtnClearLog";
-            this.lbtnClearLog.Size = new System.Drawing.Size(14, 12);
-            this.lbtnClearLog.TabIndex = 8;
-            this.lbtnClearLog.Text = "⛞";
-            this.toolTip1.SetToolTip(this.lbtnClearLog, "清除控制台");
-            this.lbtnClearLog.Click += new System.EventHandler(this.lbtnClearLog_Click);
-            // 
-            // lblConsolePop
-            // 
-            this.lblConsolePop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblConsolePop.AutoSize = true;
-            this.lblConsolePop.BackColor = System.Drawing.Color.Transparent;
-            this.lblConsolePop.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lblConsolePop.Location = new System.Drawing.Point(168, 1);
-            this.lblConsolePop.Name = "lblConsolePop";
-            this.lblConsolePop.Size = new System.Drawing.Size(14, 12);
-            this.lblConsolePop.TabIndex = 8;
-            this.lblConsolePop.Text = "⧉";
-            this.toolTip1.SetToolTip(this.lblConsolePop, "控制台浮动显示");
-            this.lblConsolePop.Click += new System.EventHandler(this.lblConsolePop_Click);
-            // 
-            // txtConsole
-            // 
-            this.txtConsole.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtConsole.Location = new System.Drawing.Point(3, 66);
-            this.txtConsole.Name = "txtConsole";
-            this.txtConsole.Size = new System.Drawing.Size(180, 21);
-            this.txtConsole.TabIndex = 9;
-            this.txtConsole.Visible = false;
-            // 
             // FrmBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -970,6 +970,8 @@ namespace AutoBrowser
             this.pelUrl.ResumeLayout(false);
             this.grpScriptBody.ResumeLayout(false);
             this.grpScriptBody.PerformLayout();
+            this.grpConsole.ResumeLayout(false);
+            this.grpConsole.PerformLayout();
             this.grpCursorInfo.ResumeLayout(false);
             this.grpCursorInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picCursorInfo)).EndInit();
@@ -987,8 +989,6 @@ namespace AutoBrowser
             this.pelBorderHP.PerformLayout();
             this.tbsBar.ResumeLayout(false);
             this.tbsBar.PerformLayout();
-            this.grpConsole.ResumeLayout(false);
-            this.grpConsole.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1018,7 +1018,7 @@ namespace AutoBrowser
         private System.Windows.Forms.CheckBox chkAutoHP;
         private System.Windows.Forms.Panel pelBorderMP;
         private System.Windows.Forms.Panel pelBorderHP;
-        private System.Windows.Forms.TextBox txtScriptBody;
+        private Ctrls.HoldTextBox txtScriptBody;
         private System.Windows.Forms.Splitter splitTargetList;
         private System.Windows.Forms.Button btnScriptSave;
         private System.Windows.Forms.ComboBox cbxScriptFiles;
